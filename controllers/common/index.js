@@ -16,20 +16,53 @@ exports.login = async (req, res, next) => {
       email,
       role: { $in: ["user", "singer"] },
     });
-    if (!user) res.send(404);
+    if (!user) res.sendStatus(404);
     const validPassword = await validatePassword(password, user.password);
-    if (!validPassword) res.send(404);
+    if (!validPassword) res.sendStatus(404);
     const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
     await User.findByIdAndUpdate(user._id, { accessToken });
     res.cookie("authorization-stream-music", accessToken);
     if (!user.resetPassword) {
-      res.send(200);
+      res.sendStatus(200);
     } else {
-      res.send(200);
+      res.sendStatus(200);
     }
   } catch (error) {
     res.send(error.message);
+  }
+};
+
+exports.signup = async (req, res, next) => {
+  const { username, name, surname, email, password, role, payment } = req.body;
+  try {
+    const hashedPassword = await hashPassword(password);
+    const newUser = new User({
+      name,
+      surname,
+      email,
+      password: hashedPassword,
+      role: role || "user",
+      resetPassword: false,
+    });
+    const accessToken = jwt.sign(
+      { userId: newUser._id },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+    newUser.accessToken = accessToken;
+    await newUser.save();
+    res.cookie("authorization-stream-music", accessToken);
+    res.sendStatus(200);
+    // res.redirect("/");
+  } catch (error) {
+    res.send(error.message);
+    // res.render("common/signup", {
+    //   alert: "email-exists",
+    //   user: { username, name, surname, email, role },
+    // });
   }
 };

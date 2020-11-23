@@ -30,6 +30,7 @@ router.get("/auth/login", (req, res) => {
   res.send("hola");
 });
 router.post("/auth/login", controllers.common.login);
+router.post("/auth/signup", controllers.common.signup);
 
 // TO IMPLEMENT
 // router.get(
