@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const path = require("path");
 const routes = require("./routes");
+const cors = require("cors");
 
 const User = require("./models/User");
 
@@ -28,6 +29,7 @@ mongoose
   });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(async (req, res, next) => {
   // CHECK EXISTS ACCESS TOKEN IN HEADERS
@@ -70,8 +72,16 @@ app.use(async (req, res, next) => {
     res.send(err.message);
   }
 });
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    exposedHeaders: ["set-cookie"],
+  })
+);
 
 app.use("/", routes);
+
 app.listen(PORT, () => {
   console.log("Server is listening on Port:", PORT);
 });

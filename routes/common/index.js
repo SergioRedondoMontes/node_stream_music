@@ -26,9 +26,6 @@ let upload = multer({ storage: storage });
 
 // AUTH
 // router.post("/signup", controllers.common.signup);
-router.get("/auth/login", (req, res) => {
-  res.send("hola");
-});
 router.post("/auth/login", controllers.common.login);
 router.post("/auth/signup", controllers.common.signup);
 

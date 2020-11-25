@@ -25,9 +25,9 @@ exports.login = async (req, res, next) => {
     await User.findByIdAndUpdate(user._id, { accessToken });
     res.cookie("authorization-stream-music", accessToken);
     if (!user.resetPassword) {
-      res.sendStatus(200);
+      res.status(200).send({ email: user.email, JWT: accessToken });
     } else {
-      res.sendStatus(200);
+      res.status(200).send({ email: user.email, JWT: accessToken });
     }
   } catch (error) {
     res.send(error.message);
@@ -35,7 +35,8 @@ exports.login = async (req, res, next) => {
 };
 
 exports.signup = async (req, res, next) => {
-  const { username, name, surname, email, password, role, payment } = req.body;
+  console.log("body", req.body);
+  const { name, surname, email, password, role } = req.body;
   try {
     const hashedPassword = await hashPassword(password);
     const newUser = new User({
@@ -56,7 +57,7 @@ exports.signup = async (req, res, next) => {
     newUser.accessToken = accessToken;
     await newUser.save();
     res.cookie("authorization-stream-music", accessToken);
-    res.sendStatus(200);
+    res.status(200).send({ email: newUser.email, JWT: accessToken });
     // res.redirect("/");
   } catch (error) {
     res.send(error.message);
