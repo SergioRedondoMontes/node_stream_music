@@ -2,12 +2,22 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const SongSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
-    cover: {
+    picture: {
+      format: { type: String },
+      data: { type: Buffer },
+    },
+    artist: {
+      type: Array,
+    },
+    year: {
       type: String,
+    },
+    genre: {
+      type: Array,
     },
     musicSrc: {
       type: String,
