@@ -15,7 +15,9 @@ RUN npm install --silent
 # add app
 COPY . ./
 
+EXPOSE 5000
+
 # start app
-CMD ["npm", "start"]
+CMD ["npm", "run","start"]
 
 #docker run -p 5080:5000 -d sampleApi:dev
