@@ -74,7 +74,7 @@ app.use(async (req, res, next) => {
 });
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://192.168.64.3:30946",
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })

@@ -18,6 +18,6 @@ COPY . ./
 EXPOSE 5000
 
 # start app
-CMD ["npm", "run","start"]
+CMD ["npm","run","start"]
 
 #docker run -p 5080:5000 -d sampleApi:dev
