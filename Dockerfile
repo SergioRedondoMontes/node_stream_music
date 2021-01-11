@@ -1,6 +1,7 @@
 # pull official base image
 FROM node:13.12.0-alpine
-
+# RUN apk update && apk add nginx-full openssh-server sshpass && rm -rf /var/cache/apk/*
+RUN apk update && apk add openssh
 # set working directory
 WORKDIR /app
 
