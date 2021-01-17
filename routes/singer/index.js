@@ -6,7 +6,7 @@ const controllers = require("../../controllers");
 
 router.post(
   "/upload",
-  middleWares.auth.checkLoggedIn,
+  // middleWares.auth.checkLoggedIn,
   upload.single("song"),
   controllers.singer.uploadSong
   //   (req, res) => {

@@ -8,7 +8,7 @@ exports.uploadSong = async (req, res) => {
   client.scp(
     req.file.path,
     {
-      host: "172.17.0.4",
+      host: "172.17.0.2",
       username: "root",
       password: "",
       path: "/usr/src/stream-music",
@@ -29,7 +29,7 @@ exports.uploadSong = async (req, res) => {
         console.log(err);
       }
       if (metadata) {
-        console.log(metadata);
+        console.log(metadata.picture[0].data);
         var base64data = metadata.picture[0].data.toString("base64");
         const newSong = new Song({
           ...metadata,

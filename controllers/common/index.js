@@ -1,6 +1,7 @@
 const User = require("../../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Song = require("../../models/Song");
 
 async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
@@ -65,5 +66,15 @@ exports.signup = async (req, res, next) => {
     //   alert: "email-exists",
     //   user: { username, name, surname, email, role },
     // });
+  }
+};
+
+exports.getSongs = async (req, res, next) => {
+  try {
+    const songs = await Song.find();
+
+    res.status(200).send({ songs: songs });
+  } catch (error) {
+    res.send(error.message);
   }
 };
