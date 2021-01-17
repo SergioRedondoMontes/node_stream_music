@@ -7,7 +7,8 @@ const SongSchema = new Schema(
       required: true,
     },
     picture: {
-      type: Object,
+      format: { type: String },
+      data: { type: String },
     },
     artist: {
       type: Array,
